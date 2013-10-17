@@ -292,6 +292,28 @@ abstract class WebTestCase extends BaseWebTestCase
                 $executor = new $executorClass($om);
                 $executor->setReferenceRepository($referenceRepository);
             }
+            else
+            {
+                $name = isset($params['path']) ? $params['path'] : (isset($params['dbname']) ? $params['dbname'] : false);
+                if (!$name) {
+                    throw new \InvalidArgumentException("Connection does not contain a 'path' or 'dbname' parameter and cannot be dropped.");
+                }
+
+                var_dump($name);
+
+                self::$cachedMetadatas[$omName] = $om->getMetadataFactory()->getAllMetadata();
+                $metadatas = self::$cachedMetadatas[$omName];
+
+                $schemaTool = new SchemaTool($om);
+                $schemaTool->dropDatabase($name);
+                if (!empty($metadatas)) {
+                    $schemaTool->createSchema($metadatas);
+                }
+                $this->postFixtureSetup();
+
+                $executor = new $executorClass($om);
+                $executor->setReferenceRepository($referenceRepository);
+            }
         }
 
         if (empty($executor)) {
