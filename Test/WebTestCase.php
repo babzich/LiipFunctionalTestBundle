@@ -294,6 +294,7 @@ abstract class WebTestCase extends BaseWebTestCase
             }
             else
             {
+                $params = $connection->getParams();
                 $name = isset($params['path']) ? $params['path'] : (isset($params['dbname']) ? $params['dbname'] : false);
                 if (!$name) {
                     throw new \InvalidArgumentException("Connection does not contain a 'path' or 'dbname' parameter and cannot be dropped.");
