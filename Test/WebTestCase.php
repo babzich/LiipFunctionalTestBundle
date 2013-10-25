@@ -300,8 +300,6 @@ abstract class WebTestCase extends BaseWebTestCase
                     throw new \InvalidArgumentException("Connection does not contain a 'path' or 'dbname' parameter and cannot be dropped.");
                 }
 
-                var_dump($name);
-
                 self::$cachedMetadatas[$omName] = $om->getMetadataFactory()->getAllMetadata();
                 $metadatas = self::$cachedMetadatas[$omName];
 
