@@ -336,6 +336,8 @@ abstract class WebTestCase extends BaseWebTestCase
             copy($name, $backup);
         }
 
+        $connection->close();
+
         return $executor;
     }
 
